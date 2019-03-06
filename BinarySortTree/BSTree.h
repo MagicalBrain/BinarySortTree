@@ -31,7 +31,7 @@ struct BSTree
 
 
 
-
+//BSTree T
 bool find(KeyType x, BSTNode *t)
 {
 	if (t == false)
@@ -45,7 +45,38 @@ bool find(KeyType x, BSTNode *t)
 }
 
 
-bool find(KeyType &x)
+void insert(KeyType x,BSTNode *t)
 {
-	return find(x, root);
+	if (t == NULL)
+		t = (BSTNode*)malloc(sizeof(BSTNode));
+	else if (x < t->data)
+		insert(x, t->left);
+	else if (t->data < x)
+		insert(x, t->right);
+}
+
+void remove(KeyType &x, BSTNode *t)
+{
+	if (t == NULL)
+		return;
+	if (x < t->data)
+		remove(x, t->left);
+	else if (t->data < x)
+		remove(x, t->right);
+	else if (t->left != NULL && t->right != NULL)
+	{
+		BSTNode *tmp = t->right;
+		while (tmp->left != NULL)
+			tmp = tmp->left;
+
+		t->data = tmp->data;
+		remove(t->data, t->right);
+
+	}
+	else
+	{
+		BSTNode *re = t;
+		t = (t->left != NULL) ? t->left : t->right;
+
+	}
 }
