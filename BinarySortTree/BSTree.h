@@ -48,7 +48,12 @@ bool find(KeyType x, BSTNode *t)
 void insert(KeyType x,BSTNode *t)
 {
 	if (t == NULL)
+	{
 		t = (BSTNode*)malloc(sizeof(BSTNode));
+		t->data = x;
+		t->left = NULL;
+		t->right = NULL;
+	}	
 	else if (x < t->data)
 		insert(x, t->left);
 	else if (t->data < x)
