@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 
-//???
 #define TRUE 1
 #define FALSE 0
 
@@ -16,36 +15,34 @@ typedef int Status;
 using namespace std;
 
 //二叉查找树结点定义
-struct BSTNode
+typedef struct BSTNode
 {
 	KeyType data;
 	BSTNode *left, *right;
-};
-
-//二叉树查找树定义
-struct BSTree
-{
-	BSTNode *root;
-};
-
+}BSTNode,*BSTree;
 
 
 
 //BSTree T
 bool find(KeyType x, BSTNode *t)
 {
-	if (t == false)
+	if (t == NULL)
 		return false;
-	else if (x < t->data)
-		return  find(x, t->left);
-	else if (t->data < x)
-		return find(x, t->right);
-	else
-		return false;
+	while (t!= NULL)
+	{
+		if (t->data == x)
+			return true;
+		if (x < t->data)
+			t = t->left;
+		if (t->data < x)
+			t = t->right;
+	}
+	
+	return false;
 }
 
 
-void insert(KeyType x,BSTNode *t)
+KeyType insert(KeyType x,BSTNode * &t)
 {
 	if (t == NULL)
 	{
@@ -53,11 +50,24 @@ void insert(KeyType x,BSTNode *t)
 		t->data = x;
 		t->left = NULL;
 		t->right = NULL;
+		return 1;
 	}	
 	else if (x < t->data)
-		insert(x, t->left);
+		return insert(x, t->left);
 	else if (t->data < x)
-		insert(x, t->right);
+		return insert(x, t->right);
+	return 0;
+}
+
+void Create_BST(BSTree& T, KeyType str[], int n)
+//构造二叉排序树
+{
+	T = NULL;
+	int i = 0;
+	while (i<n)
+	{
+		insert(str[i++], T);
+	}
 }
 
 void remove(KeyType &x, BSTNode *t)
